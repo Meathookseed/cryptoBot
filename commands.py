@@ -1,6 +1,8 @@
 from chat import *
 from telebot import types
 import btce_parse
+from db import dynamic_data_entry,data_fetch_btc,data_fetch_eth
+
 start = types.ReplyKeyboardMarkup(row_width=2)
 choose_exchange = types.KeyboardButton('Poloniex')
 choose_exchange2 = types.KeyboardButton('WEX')
@@ -17,11 +19,14 @@ button1 = types.KeyboardButton('Получить данные')
 wex.add(button1,backward)
 
 def parse_polo_eth(message):
-    bot.send_message(message.chat.id,btce_parse.parse_polo_eth(),parse_mode='HTML',
+    bot.send_message(message.chat.id,data_fetch_eth(),parse_mode='HTML',
                      reply_markup=poloniex)
     bot.send_message(message.chat.id,'end')
 
 def parse_polo_btc(message):
-    bot.send_message(message.chat.id,btce_parse.parse_polo_btc(),parse_mode='HTML',
+    bot.send_message(message.chat.id,data_fetch_btc(),parse_mode='HTML',
                      reply_markup=poloniex)
     bot.send_message(message.chat.id,'end')
+
+def collecting_data():
+    dynamic_data_entry()
