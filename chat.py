@@ -2,9 +2,7 @@ from commands import *
 import commands
 import telebot
 
-
-
-bot=telebot.TeleBot('Token')
+bot=telebot.TeleBot('526776089:AAGS05XYS3UceO2XTtjGY5AWJNn_4anU4a4')
 
 @bot.message_handler(commands=['start'])
 def hello(message):
@@ -34,6 +32,10 @@ def polo_eth(message):
 @bot.message_handler(func=lambda message:(message.text == 'Получить данные об ETH'),content_types='text')
 def polo_btc(message):
     commands.parse_polo_eth(message)
+
+@bot.message_handler(func=lambda message:(message.text == 'Получить данные'),content_types='text')
+def wex_coin(message):
+    commands.parse_wex(message)
 
 if __name__=='__main__':
     bot.polling(none_stop=True)

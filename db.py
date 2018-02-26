@@ -1,5 +1,5 @@
 import sqlite3
-import btce_parse
+import coin_info
 import time
 
 #1.create db
@@ -7,7 +7,7 @@ import time
 def create_table():
     conn = sqlite3.connect('example.db')
     c = conn.cursor()
-    c.execute("CREATE TABLE IF NOT EXISTS data (btc TEXT,eth TEXT,time REAL)")
+    c.execute("CREATE TABLE IF NOT EXISTS data (btc TEXT,eth TEXT,wex TEXT,time REAL)")
     c.close()
     conn.close()
 
@@ -15,14 +15,14 @@ def data_entry():
     conn = sqlite3.connect('example.db')
     c = conn.cursor()
     unix = time.time()
-    c.execute("INSERT INTO data VALUES(?,?,?)",(btce_parse.parse_polo_btc(),btce_parse.parse_polo_eth(),unix))
+    c.execute("INSERT INTO data VALUES(?,?,?,?)", (coin_info.parse_polo_btc(), coin_info.parse_polo_eth(),
+                                                   coin_info.wex(), unix))
     conn.commit()
     c.close()
     conn.close()
 
 def dynamic_data_entry():
     conn = sqlite3.connect('example.db')
-    c = conn.cursor()
     while True:
         data_entry()
         time.sleep(1)
@@ -54,6 +54,18 @@ def data_fetch_btc():
     c.close()
     conn.close()
 
+def data_fetch_wex():
+    conn = sqlite3.connect('example.db')
+    c = conn.cursor()
+    c.execute("select wex from data order by time desc limit 1")
+    message = ''
+    mes = c.fetchone()
+    for row in mes:
+        message += str(row)
+    return row
+    conn.commit()
+    c.close()
+    conn.close()
 
 
 
