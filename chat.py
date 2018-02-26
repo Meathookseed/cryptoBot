@@ -2,7 +2,7 @@ from commands import *
 import commands
 import telebot
 
-bot=telebot.TeleBot('526776089:AAGS05XYS3UceO2XTtjGY5AWJNn_4anU4a4')
+bot=telebot.TeleBot('Token')
 
 @bot.message_handler(commands=['start'])
 def hello(message):
